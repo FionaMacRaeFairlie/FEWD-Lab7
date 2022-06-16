@@ -1,20 +1,16 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  Outlet,
-  useParams,
-} from "react-router-dom";
-import Courses from "./paths/Courses";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import StyledLayout from "./paths/StyledLayout";
+import Home from "./paths/Home";
+import Locations from "./paths/Locations";
 import Search from "./paths/Search";
 import List from "./paths/List";
+import Item from "./paths/Item";
+import MenuItems from "./paths/MenuItems";
+import NoPage from "./paths/NoPage";
+import AboutUs from "./paths/AboutUs";
+import Person from "./paths/Person";
 
-const users = [
-  { id: "1", fullName: "Robin Wieruch" },
-  { id: "2", fullName: "Sarah Finnley" },
-];
 const items = [
   {
     id: "1",
@@ -153,128 +149,33 @@ const items = [
   },
 ];
 
-const Home = () => {
-  return <h1>Home</h1>;
-};
+const people = [
+  { id: "1", fullName: "Jamie Smith" , bio:"Jamie is a chef who is passionate about healthy eating"},
+  { id: "2", fullName: "Nick Brown" , bio:"Nick values fresh local produce and reinventing classic dishes"},
+];
+const restaurants = [
+    {id: "1", location:"Giffnock  South Glasgow"},
+    {id: "2", location:"Bearsden  North Glasgow"},
+    {id: "3", location:"Falkirk"},
+    {id: "4", location:"Stirling"},
+]
 
-const Products = () => {
-  return (
-    <div>
-      <h2>Products</h2>
-    </div>
-  );
-};
-
-const Users = ({ users }) => {
-  return (
-    <>
-      <h2>Users</h2>
-
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            <Link to={user.id}>{user.fullName}</Link>
-          </li>
-        ))}
-      </ul>
-      <Outlet />
-    </>
-  );
-};
-
-const User = () => {
-  const { userId } = useParams();
-
-  return (
-    <>
-      <h2>User: {userId}</h2>
-
-      <Link to="/users">Back to Users</Link>
-    </>
-  );
-};
-
-const Items = ({ items }) => {
-  return (
-    <>
-      <h2>Menu</h2>
-
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <Link to={item.name}>{item.name}</Link>
-          </li>
-        ))}
-      </ul>
-      <Outlet />
-    </>
-  );
-};
-
-const Item = () => {
-  const { itemId } = useParams();
-  const currentItem =items.filter((item) => {
-      return item.name=== itemId}
-  )
-  const {name, description, price} = currentItem[0]
-  return (
-    <>
-      <h3>{name}</h3>
-      <p>{description}</p>
-      <p>£{parseFloat(price).toFixed(2)}</p>
-      <Link to="/items">Back to Items</Link>
-    </>
-  );
-};
-
-const NoPage = () => {
-  return <h2>404</h2>;
-};
-const Layout = () => {
-  return (
-    <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/products">Products</Link>
-          </li>
-          <li>
-            <Link to="courses">Courses</Link>
-          </li>
-          <li>
-            {" "}
-            <Link to="/users">Users</Link>
-          </li>
-          <li>
-            {" "}
-            <Link to="/items">Items</Link>
-          </li>
-        </ul>
-      </nav>
-      <Outlet />
-    </>
-  );
-};
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<StyledLayout />}>
           <Route index element={<Home />} />
-          <Route path="products" element={<Products />} />
-          <Route path="/courses" element={<Courses />}>
-            <Route path="search" element={<Search />} />
-            <Route path="list" element={<List />} />
+          <Route path="aboutus" element={<AboutUs people={people} />}>
+            <Route path=":personId" element={<Person people={people} />} />
           </Route>
-          <Route path="users" element={<Users users={users} />}>
-            <Route path=":userId" element={<User />} />
+          <Route path="menu" element={<MenuItems items={items} />}>
+            <Route path=":itemId" element={<Item items={items} />} />
           </Route>
-          <Route path="items" element={<Items items={items} />}>
-            <Route path=":itemId" element={<Item />} />
+          <Route path="/locations" element={<Locations />}>
+            <Route path="search" element={<Search locations={restaurants}  />} />
+            <Route path="list" element={<List locations={restaurants}  />} />
           </Route>
           <Route path="*" element={<NoPage />} />
         </Route>
