@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Person = ({ people }) => {
   const { personId } = useParams();
@@ -9,7 +9,7 @@ const Person = ({ people }) => {
   const { fullName, bio } = currentItem[0];
   return (
     <>
-      <h2>Staff member: {fullName}</h2>
+      <h4>Staff member: {fullName}</h4>
       <p>{bio}</p>
     </>
   );

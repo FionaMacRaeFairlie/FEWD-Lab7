@@ -14,10 +14,7 @@ const Item = ({ items }) => {
         <div className="card-body">
           <h5 className="card-title">{name}</h5>
           <p className="card-text">{description}</p>
-          <p className="card-text">£{parseFloat(price).toFixed(2)}</p>
-          <Link to="/menu" className="btn btn-primary bg-custom ">
-            Back to Items
-          </Link>
+          <p className="card-text">£{parseFloat(price).toFixed(2)}</p>    
         </div>
       </div>
     </>
