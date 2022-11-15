@@ -1,7 +1,7 @@
 import React from "react";
 const AboutUs = () => {
 return (
-<div>
+<div>   
 <h2>About Us</h2>
 <p>We are a small local chain of cafes specialising in simple wholesome, locally
 sourced dishes.</p>
